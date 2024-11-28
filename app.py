@@ -9,7 +9,8 @@ from functions.event_pyautogui import EventPyautogui
 if __name__ == "__main__":
     #print("Iniciando o processo de captura de tela...")
     ret = screenshot()
-    
+    #print(ret)
+
     a = ret["center"]["x"]
     b = ret["center"]["y"]
 

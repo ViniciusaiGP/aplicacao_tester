@@ -15,6 +15,13 @@ def screenshot(save_path=r"./screenshots"):
     if not os.path.exists(save_path):
         os.makedirs(save_path)
 
+    def get_screen_size():
+        # Obtém a largura e a altura da tela
+        screen_width = root.winfo_screenwidth()
+        screen_height = root.winfo_screenheight()
+        print(f"Resolução total da tela: {screen_width}x{screen_height}")
+        return {"width": screen_width, "height": screen_height}
+
     def take_screenshot(x1, y1, x2, y2):
         # Define as coordenadas corretamente (ordena x1, x2 e y1, y2)
         x1, x2 = sorted((x1, x2))
@@ -73,6 +80,10 @@ def screenshot(save_path=r"./screenshots"):
     root.attributes("-fullscreen", True)  # Tela cheia
     root.attributes("-alpha", 0.3)  # Escurece a tela
     root.configure(bg="black")  # Tela preta semi-transparente
+
+    # Obtém o tamanho total da tela
+    screen_size = get_screen_size()
+    var["screen_size"] = screen_size  # Adiciona as dimensões da tela ao retorno
 
     canvas = tk.Canvas(root, cursor="cross", bg="black", highlightthickness=0)
     canvas.pack(fill=tk.BOTH, expand=True)
