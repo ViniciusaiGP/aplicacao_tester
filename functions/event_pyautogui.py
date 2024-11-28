@@ -1,7 +1,7 @@
 import pyautogui
 
 class EventPyautogui:
-    def execute_pyautogui_event(event, *args, **kwargs):
+    def execute(event, *args, **kwargs):
         """
         Executa dinamicamente uma função do pyautogui com base no nome da função.
 
