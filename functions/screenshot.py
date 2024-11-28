@@ -4,11 +4,10 @@ import uuid
 from PIL import ImageGrab
 
 # Função principal que será chamada externamente
-def take_screenshot_interactive(save_path=r"screenshots"):
-    # Certifique-se de que o diretório de destino existe
+def take_screenshot_interactive(save_path=r"./screenshots"):
+    # Verifica se o diretório de destino existe
     if save_path is None:
-        # Define o caminho absoluto para a pasta screenshots
-        save_path = os.path.abspath(r"screenshots")
+        save_path = os.path.abspath(r"./screenshots")
 
     # Cria o diretório, se necessário
     if not os.path.exists(save_path):
@@ -23,7 +22,11 @@ def take_screenshot_interactive(save_path=r"screenshots"):
 
         # Captura a área selecionada
         screenshot = ImageGrab.grab(bbox=(x1, y1, x2, y2))
+        
+        # Garante que o caminho esteja correto
         file_path = os.path.join(save_path, random_name)
+        
+        # Salva a captura
         screenshot.save(file_path)
         print(f"Screenshot salva em: {file_path}")
         print(f"Coordenadas usadas: x1={x1}, y1={y1}, x2={x2}, y2={y2}")
@@ -59,3 +62,4 @@ def take_screenshot_interactive(save_path=r"screenshots"):
     canvas.bind("<ButtonRelease-1>", end_selection)  # Finaliza a seleção
 
     root.mainloop()
+
