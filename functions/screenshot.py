@@ -31,6 +31,20 @@ def screenshot(save_path=r"./screenshots"):
         print(f"Screenshot salva em: {file_path}")
         print(f"Coordenadas usadas: x1={x1}, y1={y1}, x2={x2}, y2={y2}")
 
+        # Cálculo do centro
+        centro_x = (x1 + x2) / 2
+        centro_y = (y1 + y2) / 2
+
+        print(f"Centro da área: ({centro_x}, {centro_y})")
+        # Retorna os dados estruturados
+        return {
+            "file_path": file_path,
+            "coordinates": {"x1": x1, "y1": y1, "x2": x2, "y2": y2},
+            "center": {"x": centro_x, "y": centro_y},
+        }
+       
+        
+
     def start_selection(event):
         global start_x, start_y
         start_x, start_y = event.x, event.y
