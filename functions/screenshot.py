@@ -1,5 +1,6 @@
 import tkinter as tk
 import os
+import uuid
 from PIL import ImageGrab
 
 # Função principal que será chamada externamente
@@ -18,9 +19,11 @@ def take_screenshot_interactive(save_path="aplicacao_tester/screenshots"):
         x1, x2 = sorted((x1, x2))
         y1, y2 = sorted((y1, y2))
 
+        random_name = f"screenshot_{uuid.uuid4().hex}.png"
+
         # Captura a área selecionada
         screenshot = ImageGrab.grab(bbox=(x1, y1, x2, y2))
-        file_path = os.path.join(save_path, "screenshot.png")
+        file_path = os.path.join(save_path, random_name)
         screenshot.save(file_path)
         print(f"Screenshot salva em: {file_path}")
         print(f"Coordenadas usadas: x1={x1}, y1={y1}, x2={x2}, y2={y2}")
