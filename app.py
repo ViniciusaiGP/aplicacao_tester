@@ -7,11 +7,14 @@ from functions.event_pyautogui import EventPyautogui
 
 
 if __name__ == "__main__":
-    print("Iniciando o processo de captura de tela...")
+    #print("Iniciando o processo de captura de tela...")
     ret = screenshot()
-    print(ret)
-    #EventPyautogui.execute('moveTo', 100, 100)
-    print("Captura de tela concluída!")
+    
+    a = ret["center"]["x"]
+    b = ret["center"]["y"]
+
+    EventPyautogui.execute('moveTo', a, b)
+    #print("Captura de tela concluída!")
 
     #print(EventPyautogui.auto_complete_event())
 

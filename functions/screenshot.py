@@ -5,6 +5,8 @@ from PIL import ImageGrab
 
 # Função principal que será chamada externamente
 def screenshot(save_path=r"./screenshots"):
+    var = {}
+
     # Verifica se o diretório de destino existe
     if save_path is None:
         save_path = os.path.abspath(r"./screenshots")
@@ -36,14 +38,13 @@ def screenshot(save_path=r"./screenshots"):
         centro_y = (y1 + y2) / 2
 
         print(f"Centro da área: ({centro_x}, {centro_y})")
+        
         # Retorna os dados estruturados
         return {
             "file_path": file_path,
             "coordinates": {"x1": x1, "y1": y1, "x2": x2, "y2": y2},
             "center": {"x": centro_x, "y": centro_y},
         }
-       
-        
 
     def start_selection(event):
         global start_x, start_y
@@ -59,7 +60,8 @@ def screenshot(save_path=r"./screenshots"):
         # Calcula as coordenadas finais e tira a captura
         x1, y1, x2, y2 = start_x, start_y, event.x, event.y
         root.destroy()  # Fecha a janela
-        take_screenshot(x1, y1, x2, y2)  # Captura a área selecionada
+        # Captura a área selecionada e atualiza a variável var
+        var.update(take_screenshot(x1, y1, x2, y2))
 
     def cancel_selection(event):
         # Fechar a janela sem fazer a captura
@@ -84,3 +86,5 @@ def screenshot(save_path=r"./screenshots"):
     root.bind("<Escape>", cancel_selection)
 
     root.mainloop()
+
+    return var
