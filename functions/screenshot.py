@@ -4,11 +4,11 @@ import uuid
 from PIL import ImageGrab
 
 # Função principal que será chamada externamente
-def take_screenshot_interactive(save_path="aplicacao_tester/screenshots"):
+def take_screenshot_interactive(save_path=r"screenshots"):
     # Certifique-se de que o diretório de destino existe
     if save_path is None:
         # Define o caminho absoluto para a pasta screenshots
-        save_path = os.path.abspath("aplicacao_tester/screenshots")
+        save_path = os.path.abspath(r"screenshots")
 
     # Cria o diretório, se necessário
     if not os.path.exists(save_path):
