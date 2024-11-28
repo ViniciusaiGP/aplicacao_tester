@@ -4,5 +4,5 @@ from functions.event_pyautogui import EventPyautogui
 if __name__ == "__main__":
     print("Iniciando o processo de captura de tela...")
     screenshot()
-    EventPyautogui.execute('moveTo', 100, 100)
+    #EventPyautogui.execute('moveTo', 100, 100)
     print("Captura de tela concluída!")

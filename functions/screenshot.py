@@ -47,6 +47,11 @@ def screenshot(save_path=r"./screenshots"):
         root.destroy()  # Fecha a janela
         take_screenshot(x1, y1, x2, y2)  # Captura a área selecionada
 
+    def cancel_selection(event):
+        # Fechar a janela sem fazer a captura
+        print("Ação cancelada.")
+        root.destroy()
+
     # Configuração inicial da janela de seleção
     root = tk.Tk()
     root.attributes("-fullscreen", True)  # Tela cheia
@@ -61,5 +66,7 @@ def screenshot(save_path=r"./screenshots"):
     canvas.bind("<B1-Motion>", update_selection)  # Atualização da seleção
     canvas.bind("<ButtonRelease-1>", end_selection)  # Finaliza a seleção
 
-    root.mainloop()
+    # Evento de tecla ESC para cancelar a captura
+    root.bind("<Escape>", cancel_selection)
 
+    root.mainloop()
