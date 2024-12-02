@@ -26,9 +26,49 @@ class EventPyautogui:
             raise AttributeError(f"'{event}' não é um método válido do pyautogui.")
         except Exception as e:
             raise RuntimeError(f"Erro ao executar '{event}': {e}")
-    
-    def auto_complete_event():
-        """
-        Retorna uma string com sugestões de métodos chamáveis no pyautogui.
-        """
-        return "\n".join([method for method in dir(pyautogui) if callable(getattr(pyautogui, method)) and not method.startswith('_')])
+
+    def get_useful_methods():
+        useful_keywords = ["click", "write", "drag", "move", "press", "type", "scroll"]
+        exclude_methods = ["typewrite"]  # Lista de métodos que você não quer no retorno
+        translations = {
+            "click": "clicar",
+            "doubleClick": "clique duplo",
+            "drag": "arrastar",
+            "dragRel": "arrastar relativo",
+            "dragTo": "arrastar para",
+            "hscroll": "rolagem horizontal",
+            "leftClick": "clique esquerdo",
+            "middleClick": "clique do meio",
+            "move": "mover",
+            "moveRel": "mover relativo",
+            "moveTo": "mover para",
+            "press": "pressionar",
+            "rightClick": "clique direito",
+            "scroll": "rolar",
+            "tripleClick": "clique triplo",
+            "vscroll": "rolagem vertical",
+            "write": "escrever",
+        }
+
+        methods = [
+            {
+                "textoOrg": method,
+                "textoTranslate": translations.get(method, "tradução não disponível"),
+            }
+            for method in sorted(
+                [
+                    method for method in dir(pyautogui)
+                    if callable(getattr(pyautogui, method))
+                       and not method.startswith('_')
+                       and any(keyword in method.lower() for keyword in useful_keywords)
+                       and method not in exclude_methods  # Exclui métodos indesejados
+                ]
+            )
+        ]
+
+        return methods
+
+
+if __name__ == "__main__":
+    EventPyautogui.get_useful_methods()
+    print(EventPyautogui.get_useful_methods())

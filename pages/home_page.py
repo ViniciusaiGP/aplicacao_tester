@@ -1,6 +1,8 @@
 import tkinter as tk
 from tkinter import messagebox
 
+from pages.novo_page import NewTestScreen
+
 
 class TestManagerApp:
     def __init__(self, master):
@@ -26,13 +28,19 @@ class TestManagerApp:
             {"name": "Teste 1"},
             {"name": "Teste 2"},
         ]
-        
+
         self.update_list()
 
     def create_new_test(self):
-        new_test_name = f"Teste {len(self.tests) + 1}"
-        self.tests.append({"name": new_test_name})
-        self.update_list()
+        # Abre uma nova janela para a tela de novo teste
+        new_window = tk.Toplevel(self.master)
+        new_window.geometry("900x400")
+
+        # Centralizar a nova janela na tela
+        self.center_window(new_window, 900, 400)
+
+        NewTestScreen(new_window)  # Inicializa a classe NewTestScreen com a nova janela como master
+
 
     def update_list(self):
         # Remove todos os widgets existentes antes de recriar
@@ -73,14 +81,45 @@ class TestManagerApp:
             del self.tests[index - 1]
             self.update_list()
 
+    def center_window(self, window, width, height):
+        # Obtém o tamanho da tela
+        screen_width = window.winfo_screenwidth()
+        screen_height = window.winfo_screenheight()
+
+        # Calcula as coordenadas x e y para centralizar a janela
+        x = (screen_width // 2) - (width // 2)
+        y = (screen_height // 2) - (height // 2)
+
+        # Define a posição da janela
+        window.geometry(f"{width}x{height}+{x}+{y}")
+
 
 # Inicializa a janela principal
 def main():
     root = tk.Tk()
     app = TestManagerApp(root)
-    root.geometry("900x600")  # Tamanho da janela
+
+    # Tamanho da janela
+    width = 900
+    height = 600
+
+    # Centraliza a janela principal
+    center_window(root, width, height)
+
     root.mainloop()
 
+
+def center_window(window, width, height):
+    # Obtém o tamanho da tela
+    screen_width = window.winfo_screenwidth()
+    screen_height = window.winfo_screenheight()
+
+    # Calcula as coordenadas x e y para centralizar a janela
+    x = (screen_width // 2) - (width // 2)
+    y = (screen_height // 2) - (height // 2)
+
+    # Define a posição e o tamanho da janela
+    window.geometry(f"{width}x{height}+{x}+{y}")
 
 if __name__ == "__main__":
     main()

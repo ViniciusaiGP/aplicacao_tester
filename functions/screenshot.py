@@ -5,12 +5,12 @@ from PIL import ImageGrab
 
 class Lightshot:
     # Função principal que será chamada externamente
-    def screenshot(save_path=r"./screenshots"):
+    def screenshot(save_path=r"../screenshots"):
         var = {}
 
         # Verifica se o diretório de destino existe
         if save_path is None:
-            save_path = os.path.abspath(r"./screenshots")
+            save_path = os.path.abspath(r"../screenshots")
 
         # Cria o diretório, se necessário
         if not os.path.exists(save_path):
