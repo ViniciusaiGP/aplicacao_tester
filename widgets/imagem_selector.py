@@ -2,7 +2,7 @@ from tkinter import Toplevel, filedialog, messagebox
 import tkinter as tk
 
 from functions.screenshot import Lightshot
-
+from utils.open_folder import OpenFolder
 
 class ImageActionModal:
     def __init__(self, master, action_index, on_image_selected):
@@ -42,18 +42,12 @@ class ImageActionModal:
         root = tk.Tk()
         root.withdraw()  # Esconde a janela principal
 
-        # Abre o diálogo de seleção de arquivo
-        arquivo = filedialog.askopenfilename(title="Selecione um arquivo",
-                                             filetypes=[("Imagens", "*.png;*.jpg;*.jpeg;*.bmp"), ("Todos os Arquivos", "*.*")])
-        if arquivo:
-            print(f"Arquivo selecionado: {arquivo}")
-            self.on_image_selected(arquivo)
-        else:
-            print("Nenhum arquivo foi selecionado.")
+        OpenFolder.selecionar_arquivo()
         self.modal.destroy()
 
     def capture_screenshot(self):
         # Lógica para capturar a tela
+        self.modal.destroy()
         try:
             screenshot_path = Lightshot.screenshot()  # Ajuste conforme a lógica da sua classe Lightshot
             if screenshot_path and screenshot_path.strip():  # Verifica se o caminho da captura é válido

@@ -1,75 +1,11 @@
-from tkinter import Toplevel, filedialog, messagebox
-import tkinter as tk
-from functions.screenshot import Lightshot
 import os
 import sys
-from tkinter import ttk
+import tkinter as tk
+from tkinter import ttk, filedialog, messagebox
 
 from functions.event_pyautogui import EventPyautogui
-
-
-class ImageActionModal:
-    def __init__(self, master, action_index, on_image_selected):
-        self.master = master
-        self.action_index = action_index
-        self.on_image_selected = on_image_selected
-
-        # Cria a janela modal
-        self.modal = Toplevel(self.master)
-        self.modal.title("Escolher Opção")
-        self.modal.geometry("300x150")
-        self.modal.grab_set()  # Torna a modal modal
-
-        # Título
-        tk.Label(self.modal, text="Escolha uma opção:", font=("Arial", 12, "bold")).pack(pady=10)
-
-        # Botão para importar imagem
-        import_button = tk.Button(
-            self.modal,
-            text="Importar Imagem",
-            command=self.import_image,
-            width=20
-        )
-        import_button.pack(pady=5)
-
-        # Botão para capturar tela
-        capture_button = tk.Button(
-            self.modal,
-            text="Capturar Tela",
-            command=self.capture_screenshot,
-            width=20
-        )
-        capture_button.pack(pady=5)
-
-    def import_image(self):
-        # Cria a janela principal
-        root = tk.Tk()
-        root.withdraw()  # Esconde a janela principal
-
-        # Abre o diálogo de seleção de arquivo
-        arquivo = filedialog.askopenfilename(title="Selecione um arquivo",
-                                             filetypes=[("Imagens", "*.png;*.jpg;*.jpeg;*.bmp"), ("Todos os Arquivos", "*.*")])
-        if arquivo:
-            print(f"Arquivo selecionado: {arquivo}")
-            # Chama a função on_image_selected corretamente com o caminho do arquivo
-            self.on_image_selected(self.action_index, arquivo)
-        else:
-            print("Nenhum arquivo foi selecionado.")
-        self.modal.destroy()
-
-    def capture_screenshot(self):
-        # Lógica para capturar a tela
-        try:
-            screenshot_path = Lightshot.screenshot()  # Ajuste conforme a lógica da sua classe Lightshot
-            if screenshot_path and screenshot_path.strip():  # Verifica se o caminho da captura é válido
-                print(f"Captura de tela salva em: {screenshot_path}")  # Exibe o caminho da captura
-                self.on_image_selected(self.action_index, screenshot_path)
-            else:
-                messagebox.showwarning("Aviso",
-                                       "Falha ao capturar a tela.")  # Alerta se o caminho da captura for inválido
-        except Exception as e:
-            messagebox.showerror("Erro", f"Falha ao capturar a tela: {str(e)}")  # Exibe mensagem de erro
-        self.modal.destroy()
+from functions.screenshot import Lightshot
+from widgets.imagem_selector import ImageActionModal
 
 
 class NewTestScreen:
@@ -166,13 +102,10 @@ class NewTestScreen:
     def update_action_type(self, index, action_type):
         self.actions[index]["type"] = action_type
 
-    def update_action_image(self, action_index, image_path):
+    def update_action_image(self, image_path):
         # Atualiza o caminho da imagem no dicionário de ações
-        if image_path:  # Garante que o caminho da imagem não seja None ou inválido
-            self.actions[action_index]["image"] = image_path
-            messagebox.showinfo("Imagem Carregada", f"Imagem carregada com sucesso: {image_path}")
-        else:
-            messagebox.showwarning("Aviso", "Caminho de imagem inválido!")
+        self.actions[-1]["image"] = image_path
+        messagebox.showinfo("Imagem Carregada", f"Imagem carregada com sucesso: {image_path}")
 
     def delete_action(self, index):
         confirm = messagebox.askyesno("Confirmar Exclusão", f"Tem certeza que deseja excluir a ação {index + 1}?")
